@@ -4,8 +4,9 @@ class LargePurchaseDiscount
   def apply(products)
     if discount_applies?(products)
       total_price = products.map(&:price).reduce(:+)
+      discounted_price = ((total_price * 0.1))
 
-      products << Product.new(name: '', code: '10OFF', price: -(total_price * 0.1).round(2))
+      products << Product.new(name: '', code: '10OFF', price: -discounted_price)
     end
 
     products

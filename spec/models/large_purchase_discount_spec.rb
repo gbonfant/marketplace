@@ -13,7 +13,7 @@ describe LargePurchaseDiscount do
         discounted_products = described_class.new.apply(products)
 
         # (65 + 22) * 0.10 = 8.70
-        expect(discounted_products.last.price).to eq(-8.70)
+        expect(discounted_products.last.price.round(2)).to eq(-8.70)
       end
     end
 

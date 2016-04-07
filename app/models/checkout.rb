@@ -13,7 +13,7 @@ class Checkout
   def total
     discounted_products = apply_promotional_rules
 
-    discounted_products.map(&:price).reduce(:+)
+    discounted_products.map(&:price).reduce(:+).round(2)
   end
 
   private
@@ -22,7 +22,7 @@ class Checkout
 
   def apply_promotional_rules
     promotional_rules.flatten.each_with_object(@products) do |promo_rule, discounted_products|
-      promo_rule.apply(discounted_products)
+      discounted_products = promo_rule.apply(discounted_products)
     end
   end
 end
