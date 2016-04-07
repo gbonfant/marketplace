@@ -1,4 +1,4 @@
-require 'null_promotional_rules'
+require_relative 'null_promotional_rules'
 
 class Checkout
   def initialize(*promotional_rules)
