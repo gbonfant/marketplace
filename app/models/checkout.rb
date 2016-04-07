@@ -1,7 +1,9 @@
+require 'null_promotional_rules'
+
 class Checkout
   def initialize(promotional_rules = nil)
     @products = []
-    @promotional_rules = promotional_rules
+    @promotional_rules = promotional_rules || NullPromotionalRules.new
   end
 
   def scan(product)
