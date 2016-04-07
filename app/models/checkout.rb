@@ -9,6 +9,6 @@ class Checkout
   end
 
   def total
-    @products.reduce(:+)
+    @products.map(&:price).reduce(:+)
   end
 end
