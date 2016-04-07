@@ -43,6 +43,24 @@ describe Checkout do
       end
     end
 
-    context 'when several promotional rules are present'
+    context 'when several promotional rules are present' do
+      it 'calculates the total price based on all the promotional rules' do
+        promotional_rules = [LargePurchaseDiscount.new, BulkPurchaseDiscount.new]
+        checkout = described_class.new(promotional_rules)
+
+        checkout.scan Product.new(code: '000', name: 'Expensive CD', price: 59)
+        checkout.scan Product.new(code: '012', name: 'Expensive milk', price: 11)
+        checkout.scan Product.new(code: '001', name: 'Promo product', price: 9.20)
+        checkout.scan Product.new(code: '001', name: 'Promo product', price: 9.20)
+
+        # Reduce the price for promotional items to the promotional price
+        # when there are more than n items in the basket
+        # AND
+        # Apply 10% discount to the total price
+        # (59 + 11 + 9.20 + 9.20) = 88.40
+        # 88.40 - (88.40 * 0.10) = 79.56
+        expect(checkout.total).to eq(79.56)
+      end
+    end
   end
 end
