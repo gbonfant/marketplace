@@ -1,7 +1,7 @@
 require 'null_promotional_rules'
 
 class Checkout
-  def initialize(promotional_rules = nil)
+  def initialize(*promotional_rules)
     @products = []
     @promotional_rules = promotional_rules || NullPromotionalRules.new
   end
@@ -21,6 +21,8 @@ class Checkout
   attr_reader :promotional_rules
 
   def apply_promotional_rules
-    promotional_rules.apply(@products)
+    promotional_rules.flatten.each_with_object(@products) do |promo_rule, discounted_products|
+      promo_rule.apply(discounted_products)
+    end
   end
 end

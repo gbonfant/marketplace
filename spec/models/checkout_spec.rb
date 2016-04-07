@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'product'
 require 'checkout'
+require 'bulk_purchase_discount'
 require 'large_purchase_discount'
 
 describe Checkout do
@@ -45,7 +46,7 @@ describe Checkout do
 
     context 'when several promotional rules are present' do
       it 'calculates the total price based on all the promotional rules' do
-        promotional_rules = [LargePurchaseDiscount.new, BulkPurchaseDiscount.new]
+        promotional_rules = [BulkPurchaseDiscount.new, LargePurchaseDiscount.new]
         checkout = described_class.new(promotional_rules)
 
         checkout.scan Product.new(code: '000', name: 'Expensive CD', price: 59)
@@ -57,9 +58,9 @@ describe Checkout do
         # when there are more than n items in the basket
         # AND
         # Apply 10% discount to the total price
-        # (59 + 11 + 9.20 + 9.20) = 88.40
-        # 88.40 - (88.40 * 0.10) = 79.56
-        expect(checkout.total).to eq(79.56)
+        # (59 + 11 + 8.50 + 8.50) = 87
+        # 87 - (87 * 0.10) = 78.3
+        expect(checkout.total).to eq(78.3)
       end
     end
   end
