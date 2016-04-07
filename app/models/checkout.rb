@@ -9,6 +9,16 @@ class Checkout
   end
 
   def total
-    @products.map(&:price).reduce(:+)
+    discounted_products = apply_promotional_rules
+
+    discounted_products.map(&:price).reduce(:+)
+  end
+
+  private
+
+  attr_reader :promotional_rules
+
+  def apply_promotional_rules
+    promotional_rules.apply(@products)
   end
 end

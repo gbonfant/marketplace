@@ -1,6 +1,7 @@
 require 'spec_helper'
-require 'checkout'
 require 'product'
+require 'checkout'
+require 'large_purchase_discount'
 
 describe Checkout do
   describe '#scan' do
